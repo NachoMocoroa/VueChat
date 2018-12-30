@@ -1,0 +1,172 @@
+<template>
+  <div class="wrapper-chat">
+    <section class="chat-threads">
+      <template v-if="chatContainer">
+        <div class="chat-item" 
+        data-selected="false"
+        v-for="(chatItem, index) in chatContainer" 
+        :key="index"
+        @click="selectChat(index)">{{ chatItem.threadName }}</div>
+      </template>
+      <template v-else>
+        <div>No data</div>
+      </template>
+    </section>
+    <section class="chat-display">
+      <template v-if="chatDataSelected">
+        <div class="chat-title">{{ chatDataSelected.threadName }}</div>
+        <div class="chat-order">
+          <span>Order from:</span>
+          <select ref="chatFilterSelect" name="order-select" class="chat-select" @change="onChange">
+            <option value="latest">Latest</option>
+            <option value="newest">Newest</option>
+            <option value="best">Best</option>
+            <option value="worst">Worst</option>
+          </select>
+        </div>
+        <ChatList :chat-data="chatObject" />
+      </template>
+      <template v-else>
+        <div>No data</div>
+      </template>
+    </section>
+  </div>
+</template>
+
+<script>
+import ChatList from './ChatList.vue';
+
+export default {
+  name: 'ForoChat',
+  components: {
+    ChatList
+  },
+  props: {
+    chat: {
+      type: Array,
+      default: function () {
+        return []
+      }
+    }
+  },
+  data () {
+    return {
+      chatContainer: null,
+      chatDataSelected: null,
+      chatObject: null
+    }
+  },
+  created() {
+    this.chatContainer = this.chat;
+  },
+  mounted() {
+    this.selectChat(0);
+  },
+  methods: {
+    onChange(event) {
+      this.filterVal(event.target.value);
+    },
+    selectChat(param) {
+      this.chatDataSelected = this.chatContainer[param];
+      // eslint-disable-next-line
+      console.log('--- this.chatDataSelected: ', this.chatDataSelected);
+      this.setSelected(param);
+      this.filterVal('latest');
+
+      let filterSelect = this.$refs.chatFilterSelect;
+      if (filterSelect) {
+        //console.log(' >>>>>>> chatFilterSelect: ', filterSelect.getElementsByTagName('option')[0]);
+        filterSelect.selectedIndex = 0;
+      }
+    },
+    setSelected(param) {
+      let itemsList = document.querySelectorAll('.chat-item'),
+        itemsListLength = itemsList.length;
+
+      for (let i = 0; i < itemsListLength; i++) {
+        itemsList[i].dataset.selected = false;
+      }
+      itemsList[param].dataset.selected = true;
+    },
+    filterVal(param) {
+      let paramVal = '';
+      let reverse = true;
+      switch (param) {
+        case 'latest':
+          reverse = true;
+          paramVal = 'id';
+          break;
+        case 'newest':
+          reverse = false;
+          paramVal = 'id';
+          break;
+        case 'best':
+          reverse = false;
+          paramVal = 'valoration';
+          break;
+        case 'worst':
+          reverse = true;
+          paramVal = 'valoration';
+          break;
+        default:
+          // eslint-disable-next-line
+          console.log('No data: ', param);
+      }
+      this.chatObject = {
+        "filter": paramVal,
+        "reverse": reverse,
+        "chat": this.chatDataSelected
+      };
+      // eslint-disable-next-line
+      console.log('this.chatObject: ', this.chatObject);
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+  .wrapper-chat {
+    margin: 0;
+    padding: 0;
+    outline: 1px solid red;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: 1fr;
+    .chat-threads {
+      outline: 1px solid green;
+      .chat-item {
+        margin: 0 0 5px 0;
+        cursor: pointer;
+        outline: 1px solid blue;
+        &:last-child {
+          margin: 0;
+        }
+        &:hover {
+          background-color: var(--grey-light);
+          color: var(--white-light);
+        }
+        &[data-selected="true"] {
+          background-color: purple;
+          color: orangered;
+          pointer-events: none;
+          cursor: default;
+        }
+      }
+    }
+    .chat-display {
+      display:flex;
+      flex-wrap:wrap;
+      outline: 1px solid green;
+      
+      .chat-title {
+        flex-basis: calc(100% - 200px);
+        background-color: var(--grey-light);
+        color: var(--white-light);
+      }
+      .chat-order {
+        flex-basis: 200px;
+        background-color: yellow;
+      }
+    }
+  }
+</style>

@@ -1,0 +1,37 @@
+:root {
+  /* --- DIMENSIONS --- */
+  --max-width: 1440px;
+  --base-width: 300px;
+  --menu-list-width: 253px;
+  /* --- IMAGES --- */
+  --pagination-arrows: url('../assets/img/pagination-arrows.png');
+  /* --- FONTS --- */
+  --app-font: 'Roboto', 'Noto', sans-serif;
+  --header-font: 'Avenir', Helvetica, Arial, sans-serif;
+  --font-title: 24px;
+  --font-title-medium: 20px;
+  --font-title-small: 18px;
+  --font-subtitle: 16px;
+  --font-normal-plus: 14px;
+  --font-normal: 13px;
+  --font-small: 12px;
+  --font-litle: 10px;
+  --weight-bold: 700;
+  --weight-intermediate: 500;
+  --weight-normal: 300;
+  /* --- COLORS --- */
+  --black-rgba: rgba(0, 0, 0, 0);
+  --black-pure: #000000;
+  --white-pure: #FFFFFF;
+  --white-light: #F0F0F0;
+  --grey-blue: #172C50;
+  --grey-dark: #202020;
+  --grey-light: #757575;
+  --grey-normal: #999999;
+  --button-bg: #172c50;
+  --error-color: #DD2C00;
+  --outline-color: #5A9AF7;
+  --bg-overlay: rgba(0, 0, 0, 0.5);
+  --box-shadow-dark: rgba(0, 0, 0, 0.2);
+  --box-shadow-light: 0px 5px 15px -2px rgba(0,0,0,0.5);
+}

@@ -1,0 +1,11 @@
+body {
+  font-family: var(--app-font);
+  font-size: var(--font-normal);
+  color: var(--grey-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
