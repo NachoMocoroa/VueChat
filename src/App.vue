@@ -2,7 +2,9 @@
   <div id="app">
     <div id="app" class="wrapper">
       <section class="wrapper-data">
-        Vue Chat
+        <div class="wrapper-data-title">
+          Vue Chat
+        </div>
       </section>
       <section class="wrapper-data">
         <ForoChat v-if="chatData" :chat="chatData"/>
@@ -46,9 +48,12 @@ export default {
       max-width: unset;
       margin: 0 auto 20px 0;
       padding: 0;
-      outline: 1px solid #dedede;
       &:last-child {
         margin: 0 auto;
+        outline: 1px solid var(--grey-normal);
+      }
+      .wrapper-data-title {
+        font-size: var(--font-title);
       }
     }
   }

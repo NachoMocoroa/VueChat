@@ -123,11 +123,19 @@ export default {
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: 300px 1fr;
-    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    @media screen and (min-width: 768px) {
+      grid-template-columns: 300px 1fr;
+      grid-template-rows: 1fr;
+    }
     .chat-threads {
+      @media screen and (min-width: 768px) {
+        border-right: 1px solid var(--grey-normal);
+      }
       .chat-item {
-        margin: 0 0 5px 0;
+        font-size: var(--font-subtitle);
+        border-bottom: 1px solid var(--grey-normal);
         cursor: pointer;
         &:last-child {
           margin: 0;
@@ -139,6 +147,7 @@ export default {
         &[data-selected="true"] {
           background-color: var(--outline-color);
           color: var(--white-light);
+          font-weight: var(--weight-bold);
           pointer-events: none;
           cursor: default;
         }

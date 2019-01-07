@@ -91,7 +91,7 @@ export const threads = [
     },
     {
         threadID: "t_2",
-        threadName: "Jing and Bill",
+        threadName: "Chat 2",
         messages: [
             {
                 id: "m_1",
@@ -118,7 +118,7 @@ export const threads = [
     },
     {
         threadID: "t_3",
-        threadName: "Dave and Bill",
+        threadName: "Chat 3",
         messages: [
             {
                 id: "m_1",
@@ -166,7 +166,7 @@ export const threads = [
     },
     {
         threadID: "t_4",
-        threadName: "Functional Heads",
+        threadName: "Chat 4",
         messages: [
             {
                 id: "m_1",
