@@ -8,7 +8,6 @@
             :data-valoration="chatMessage.valoration">
                 <div class="chat-list-message-author">{{ filterIndex(chatMessage.id, index) }} - {{ chatMessage.authorName }} (ID: {{ chatMessage.id }})</div>
                 <div class="chat-list-message-time">{{ chatMessage.timestamp }}</div>
-                <!--<div class="chat-list-message-text"><b>{{ extractIndex(chatInfo.threadID + chatMessage.id) }}</b></div>-->
                 <div class="chat-list-message-text">{{ chatMessage.text }}</div>
                 <div class="chat-list-message-valoration">Valoration: {{ chatMessage.valoration }}</div>
             </div>
@@ -51,28 +50,8 @@ export default {
     mounted() {
         this.filterChat();
     },
-    /*computed: {
-      resetIndex() {
-        if (this.chatFilter === 'valoration') {
-            this.chatPage = 0;
-        } else {
-            this.chatPage = this.chatPage - 1;
-        }
-      }
-    },*/
     methods: {
-        /*extractIndex(str) {
-            let reg = str.lastIndexOf('_');
-            let ext = str.substring(reg + 1);
-            // eslint-disable-next-line
-            console.log(' --- str: ', str);
-            // eslint-disable-next-line
-            console.log(' --- ext: ', ext);
-            return ext;
-        },*/
         onClickChild (value) {
-            // eslint-disable-next-line
-            //console.log('value: ', value);
             this.chatPage = value - 1;
             this.updateChat(this.chatObject);
         },
@@ -86,76 +65,39 @@ export default {
             this.chatReverse = this.chatObject['reverse'];
             this.chatInfo = this.chatObject['chat'];
             this.chatObject.maxmessages = this.maxMessages;
-            // eslint-disable-next-line
-            console.log('111111 - this.chatFilter: ', this.chatFilter);
-            //const gggg = this.chatFilter === this.chatFilter;
-            /*let point = this.chatFilter === 'valoration';
-            let repeat = 0;
-            // eslint-disable-next-line
-            console.log('+++++ - point: ', point);
-            if(point) {
-                repeat++;
-            } else {
-                repeat = 0;
-            }
-            if (repeat === 1) {
-                this.chatPage = 0;
-            }*//* else {
-                this.chatPage = this.chatPage - 1;
-            }*/
             this.chatObject.page = this.chatPage;
-            // eslint-disable-next-line
-            console.log('this.chatObject: ', this.chatObject);
-            // eslint-disable-next-line
-            //console.log('this.chatFilter: ', this.chatFilter);
-            // eslint-disable-next-line
-            /*console.log('this.chatReverse: ', this.chatReverse);
-            // eslint-disable-next-line
-            console.log('this.chatInfo: ', this.chatInfo);*/
         },
         calculateChat(arr) {
             const from = this.chatPage * this.maxMessages;
             const to = from + this.maxMessages;
-            // eslint-disable-next-line
-            console.log('from: ', from);
-            // eslint-disable-next-line
-            console.log('to: ', to);
-            //this.numberInit = from;
             return arr.slice(from, to);
         },
         filterChat() {
             const vm = this;
             let tmpObj = this.chatInfo.messages;
-            // eslint-disable-next-line
-            //console.log('tmpObj: ', tmpObj);
             tmpObj.sort(function(a, b) {
-                const filterA = vm.filterParam(a[vm.chatFilter]);
-                const filterB = vm.filterParam(b[vm.chatFilter]);
+                const filterA = vm.parseParam(a[vm.chatFilter]);
+                const filterB = vm.parseParam(b[vm.chatFilter]);
                 if (vm.chatReverse) {
                     return (filterA > filterB) ? 1 : -1;
                 } else {
                     return (filterA < filterB) ? 1 : -1;
                 }
             });
-            //if(tmpObj.length > this.maxMessages) tmpObj = tmpObj.slice(0, this.maxMessages);
-            //if(tmpObj.length > this.maxMessages) tmpObj = this.calculateChat(tmpObj);
             this.chatFiltered = this.calculateChat(tmpObj);
-            // eslint-disable-next-line
-            //console.log('this.chatFiltered: ', this.chatFiltered);
         },
         filterIndex(identificator, iterator) {
             if (this.chatFilter === 'valoration') {
-                let calc = (this.chatPage * this.maxMessages) + iterator + 1;
-                // eslint-disable-next-line
-                //console.log('calc: ', calc);
-                //return this.numberInit + iterator + 1;
-                return calc;
+                return this.filterParam(iterator);
             } else {
-                return this.filterParam(identificator);
+                return this.parseParam(identificator);
             }
         },
-        filterParam(param) {
+        parseParam(param) {
             return parseInt(param.replace(/[^0-9]/g, ''), 10);
+        },
+        filterParam(param) {
+            return (this.chatPage * this.maxMessages) + param + 1;
         }
     },
     watch: {
@@ -163,16 +105,8 @@ export default {
             this.updateChat(newValue);
         },
         'chatFilter': function (newValue, oldValue) {
-            // eslint-disable-next-line
-            //console.log(' ---> oldValue: ', oldValue);
-            // eslint-disable-next-line
-            //console.log(' ---> newValue: ', newValue);
             if(newValue !== oldValue) {
-                // eslint-disable-next-line
-                console.log(' - CAMBIA -> newValue: ', newValue);
                 this.chatPage = 0;
-                // eslint-disable-next-line
-                //console.log('this.chatObject: ', this.chatObject);
                 this.updateChat(this.chatObject);
             }
         }
@@ -186,7 +120,7 @@ export default {
         margin: 0;
         padding: 0;
         color: var(--grey-regular);
-        background-color: coral;
+        background-color: var(--white-light);
         .chat-list {
             margin: 0;
             padding: 5px 10px;
@@ -195,7 +129,8 @@ export default {
                 flex-wrap:wrap;
                 margin: 0 0 5px 0;
                 padding: 0;
-                border-bottom: 1px solid var(--grey-light);
+                padding: 5px 10px;
+                background-color: var(--white-pure);
                 &:last-child {
                     margin: 0;
                     border-bottom: none;

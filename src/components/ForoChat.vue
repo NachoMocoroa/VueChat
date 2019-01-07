@@ -68,14 +68,10 @@ export default {
     },
     selectChat(param) {
       this.chatDataSelected = this.chatContainer[param];
-      // eslint-disable-next-line
-      console.log('--- this.chatDataSelected: ', this.chatDataSelected);
       this.setSelected(param);
       this.filterVal('latest');
-
       let filterSelect = this.$refs.chatFilterSelect;
       if (filterSelect) {
-        //console.log(' >>>>>>> chatFilterSelect: ', filterSelect.getElementsByTagName('option')[0]);
         filterSelect.selectedIndex = 0;
       }
     },
@@ -117,8 +113,6 @@ export default {
         "reverse": reverse,
         "chat": this.chatDataSelected
       };
-      // eslint-disable-next-line
-      console.log('this.chatObject: ', this.chatObject);
     }
   }
 }
@@ -128,16 +122,13 @@ export default {
   .wrapper-chat {
     margin: 0;
     padding: 0;
-    outline: 1px solid red;
     display: grid;
     grid-template-columns: 300px 1fr;
     grid-template-rows: 1fr;
     .chat-threads {
-      outline: 1px solid green;
       .chat-item {
         margin: 0 0 5px 0;
         cursor: pointer;
-        outline: 1px solid blue;
         &:last-child {
           margin: 0;
         }
@@ -146,8 +137,8 @@ export default {
           color: var(--white-light);
         }
         &[data-selected="true"] {
-          background-color: purple;
-          color: orangered;
+          background-color: var(--outline-color);
+          color: var(--white-light);
           pointer-events: none;
           cursor: default;
         }
@@ -156,16 +147,22 @@ export default {
     .chat-display {
       display:flex;
       flex-wrap:wrap;
-      outline: 1px solid green;
-      
+      .chat-title,
+      .chat-order {
+        background-color: var(--white-light);
+        padding: 5px 0 0 0;
+      }
       .chat-title {
         flex-basis: calc(100% - 200px);
-        background-color: var(--grey-light);
-        color: var(--white-light);
+        font-size: var(--font-subtitle);
+        font-weight: var(--weight-bold);
       }
       .chat-order {
         flex-basis: 200px;
-        background-color: yellow;
+        text-align: right;
+        .chat-select {
+          margin: 0 10px 0 5px;
+        }
       }
     }
   }

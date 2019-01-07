@@ -2,7 +2,7 @@
   <div id="app">
     <div id="app" class="wrapper">
       <section class="wrapper-data">
-        wrapper-data
+        Vue Chat
       </section>
       <section class="wrapper-data">
         <ForoChat v-if="chatData" :chat="chatData"/>
@@ -22,16 +22,11 @@ export default {
   },
   data () {
     return {
-      urlData: './mocks/data.js',
       chatData: null
     }
   },
   mounted() {
-    // eslint-disable-next-line
-    console.error('threads: ', threads);
     this.chatData = threads;
-    // eslint-disable-next-line
-    console.error('this.chatData: ', this.chatData);
   }
 }
 </script>
